@@ -1,0 +1,31 @@
+{
+  "name": "rokot-mq-rabbit",
+  "version": "0.1.2",
+  "description": "Rocketmakers Rokot Platform - RabbitMq Producer and Consumer",
+  "main": "./dist/index.js",
+  "typings": "./dist/index.d.ts",
+  "scripts": {
+    "build": "tsc -p source/tsconfig.json -d",
+    "test": "npm run build && mocha"
+  },
+  "keywords": [
+    "typescript",
+    "rabbitmq"
+  ],
+  "author": "developers@rocketmakers.com",
+  "license": "MIT",
+  "dependencies": {
+    "amqplib": "^0.4.0"
+  },
+  "devDependencies": {
+    "typescript": "^1.8.7"
+  },
+  "homepage": "https://github.com/Rocketmakers/rokot-mq-rabbit",
+  "repository": {
+    "type": "git",
+    "url": "git://git@github.com:Rocketmakers/rokot-mq-rabbit.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Rocketmakers/rokot-mq-rabbit/issues"
+  }
+}

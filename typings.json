@@ -1,0 +1,12 @@
+{
+  "name": "rokot-test",
+  "version": false,
+  "dependencies": {},
+  "main": "dist/index.d.ts",
+  "ambientDependencies": {
+    "amqplib": "registry:dt/amqplib#0.3.0+20160317120654",
+    "bluebird": "registry:dt/bluebird#2.0.0+20160319051630",
+    "node": "registry:dt/node#4.0.0+20160319033040",
+    "when": "registry:dt/when#2.4.0+20160317120654"
+  }
+}
