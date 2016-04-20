@@ -1,3 +1,4 @@
-export {IConnectionFactory,IConnectionConfig,ConnectionFactory} from "./connectionFactory";
-export {Consumer as RabbitMqConsumer} from "./consumer";
-export {Producer as RabbitMqProducer} from "./producer";
+export {IRabbitMqConnectionFactory,IRabbitMqConnectionConfig,RabbitMqConnectionFactory,RabbitMqSingletonConnectionFactory} from "./connectionFactory";
+export {RabbitMqConsumer,IRabbitMqConsumerDisposer} from "./consumer";
+export {RabbitMqProducer} from "./producer";
+export {IQueueNameConfig} from "./common";

@@ -28,37 +28,51 @@ You will also need these ambient dependencies:
 >NOTE: you might already have some of these ambient dependencies installed!
 
 ```
-typings install amqplib bluebird node -DA
+typings install amqplib bluebird bunyan node -SA
 ```
 
 ## Example
 
 ```typescript
-import {ConnectionFactory,RabbitMqConsumer,RabbitMqProducer,IConnectionConfig} from "rokot-mq-rabbit";
+import {RabbitMqConnectionFactory,RabbitMqConsumer,RabbitMqProducer,IRabbitMqConnectionConfig} from "rokot-mq-rabbit";
+import {Logger} from "bunyan"
 
+const logger: Logger = //create logger
 interface IMessage{
   data: string;
   value: number;
 }
 
 // Create connection with amqp connection string
-// const factory = new ConnectionFactory("amqp://localhost:1234");
+// const factory = new RabbitMqConnectionFactory(logger, "amqp://localhost:1234");
 
 // or, create connection with host/port config
-const config:IConnectionConfig = {
+const config:IRabbitMqConnectionConfig = {
   host:"localhost",
   port:1234
 }
-const factory = new ConnectionFactory(config);
+const factory = new RabbitMqConnectionFactory(logger, config);
 
-const consumer = new RabbitMqConsumer(factory)
+const consumer = new RabbitMqConsumer(logger, factory)
+
 consumer.subscribe<IMessage>("<queue name>", m => {
-  console.log(m.data)
-  console.log(m.value)
-})
+  // message received
+  console.log("Message", m.data, m.value)
+}).then(subscription => {
+  // later, if you want to cancel the subscription
+  subscription.dispose().then(() => {
+    // resolved when consumer subscription disposed
+  });
+}).catch(err => {
+  // failed to create consumer subscription!
+});
 
-const producer = new RabbitMqProducer(factory)
-producer.publish<IMessage>("<queue name>", {data: "data", value: 23})
+const producer = new RabbitMqProducer(logger, factory)
+
+const producerPublish = producer.publish<IMessage>("<queue name>", {data: "data", value: 23})
+producerPublish.then(ok => {
+  // ok = true (sent to queue) or false (failed to enqueue)
+})
 ```
 
 
