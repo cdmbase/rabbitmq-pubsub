@@ -58,9 +58,9 @@ const consumer = new RabbitMqConsumer(logger, factory)
 consumer.subscribe<IMessage>("<queue name>", m => {
   // message received
   console.log("Message", m.data, m.value)
-}).then(subscription => {
-  // later, if you want to cancel the subscription
-  subscription.dispose().then(() => {
+}).then(disposer => {
+  // later, if you want to dispose the subscription
+  disposer().then(() => {
     // resolved when consumer subscription disposed
   });
 }).catch(err => {
@@ -69,10 +69,12 @@ consumer.subscribe<IMessage>("<queue name>", m => {
 
 const producer = new RabbitMqProducer(logger, factory)
 
-const producerPublish = producer.publish<IMessage>("<queue name>", {data: "data", value: 23})
-producerPublish.then(ok => {
-  // ok = true (sent to queue) or false (failed to enqueue)
-})
+producer.publish<IMessage>("<queue name>", {data: "data", value: 23})
+  .then(() => {
+    // sent to queue
+  }).catch((err) => {
+    // failed to enqueue
+  })
 ```
 
 
