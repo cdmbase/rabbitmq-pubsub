@@ -1,13 +1,12 @@
-# rokot-mq-rabbit
+# rabbitmq-pub-sub
 
-Rokot - [Rocketmakers](http://www.rocketmakers.com/) TypeScript NodeJs Platform
+TypeScript NodeJs Platform
 
 ## Introduction
 
 A typescript library for producing and consuming rabbitmq messages
 
 
->The Rokot platform components heavily rely on usage of the [typings](https://github.com/typings/typings) utility for typescript definitions management.
 If you don't have `typings` installed:
 ```
 npm i typings -g
@@ -18,7 +17,7 @@ npm i typings -g
 ### Installation
 Install via `npm`
 ```
-npm i rokot-mq-rabbit --save
+npm i rabbitmq-pub-sub --save
 ```
 
 
@@ -34,8 +33,8 @@ typings install amqplib bluebird bunyan node -SA
 ## Example
 
 ```typescript
-import {RabbitMqConnectionFactory,RabbitMqConsumer,RabbitMqProducer,IRabbitMqConnectionConfig} from "rokot-mq-rabbit";
-import {Logger} from "bunyan"
+import {RabbitMqConnectionFactory,RabbitMqConsumer,RabbitMqProducer,IRabbitMqConnectionConfig} from "rabbitmq-pub-sub";
+import * as Logger from "bunyan"
 
 const logger: Logger = //create logger
 interface IMessage{
@@ -82,3 +81,7 @@ producer.publish<IMessage>("<queue name>", {data: "data", value: 23})
 
 ### [amqplib](https://github.com/squaremo/amqp.node)
 amqp library
+
+
+## Inspiration
+Rokot - [Rocketmakers](http://www.rocketmakers.com/) 
