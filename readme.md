@@ -20,16 +20,6 @@ Install via `npm`
 npm i rabbitmq-pub-sub --save
 ```
 
-
-### Typings
-
-You will also need these ambient dependencies:
->NOTE: you might already have some of these ambient dependencies installed!
-
-```
-typings install amqplib bluebird bunyan node -SA
-```
-
 ## Example
 
 ```typescript
