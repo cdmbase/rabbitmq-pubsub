@@ -1,6 +1,6 @@
 {
   "name": "rabbitmq-pub-sub",
-  "version": "0.2.1",
+  "version": "0.2.2",
   "description": "RabbitMq Producer and Consumer",
   "main": "./dist/main.js",
   "scripts": {
@@ -26,13 +26,11 @@
   "license": "MIT",
   "dependencies": {
     "@types/amqplib": "^0.5.1",
-    "amqplib": "^0.5.1",
-    "bluebird": "^3.3.5",
-    "bunyan": "^1.8.0"
+    "@types/bunyan": "0.0.35",
+    "amqplib": "^0.5.1"
   },
   "devDependencies": {
     "@types/bluebird": "^3.0.37",
-    "@types/bunyan": "0.0.35",
     "@types/es6-shim": "^0.31.32",
     "@types/jest": "^18.1.1",
     "@types/node": "^7.0.5",
@@ -42,8 +40,8 @@
     "@types/supertest": "^2.0.0",
     "@types/when": "^2.4.28",
     "awesome-typescript-loader": "^3.0.0-beta.19",
+    "bluebird": "^3.3.5",
     "cdm-logger": "^0.3.2",
-    "dtrace-provider": "^0.8.0",
     "jest": "^18.1.0",
     "jest-cli": "^18.1.0",
     "sinon": "^1.17.7",
