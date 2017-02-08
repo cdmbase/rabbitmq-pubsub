@@ -143,9 +143,18 @@ describe("RabbitMQ pub sub test", () => {
                     done();
                 });
         })
-
-
         Promise.delay(500).then(() => publisher.publish<IMessage>(queueName, msg))
-
     });
+})
+
+describe("Delete Queues After tests", () => {
+  it("Delete all test queues", () => {
+    var f = new RabbitMqConnectionFactory(logger, config);
+    var d = new DefaultQueueNameConfig(queueName);
+    return f.create().then(c => {
+      return c.createChannel().then(ch => {
+        return Promise.all([ch.deleteExchange(d.dlx), ch.deleteQueue(d.dlq), ch.deleteQueue(d.name)]).return()
+      })
+    })
+  })
 })

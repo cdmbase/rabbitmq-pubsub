@@ -64,14 +64,14 @@ export class RabbitMqSubscriber {
      protected async getChannelSetup(channel: amqp.Channel, queueConfig: IQueueNameConfig) {
            await channel.assertExchange(queueConfig.dlx, 'fanout', this.getDLSettings());
            let result =  await channel.assertQueue(queueConfig.dlq, this.getQueueSettings(queueConfig.dlx));
-           this.logger.debug("get amq result", result);
+           this.logger.debug("queue genereted for subscription is '(%j)') ", result);
            this.dynamicQueueName = result.queue;
            await channel.bindQueue(this.dynamicQueueName, queueConfig.dlx, '');
     }
 
     protected getQueueSettings(deadletterExchangeName: string): amqp.Options.AssertQueue {
         return {
-            exclusive: true
+            exclusive: false
         }
     }
 

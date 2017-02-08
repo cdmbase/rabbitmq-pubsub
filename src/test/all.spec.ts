@@ -10,7 +10,7 @@ import { DefaultQueueNameConfig } from "../common";
 const logger = ConsoleLogger.create("test", { level: "trace" });
 const config: IRabbitMqConnectionConfig = { host: "127.0.0.1", port: 5672 };
 const invalidConfig: IRabbitMqConnectionConfig = { host: "127.0.0.1", port: 5670 };
-const queueName = "TestPC";
+const queueName = "TestPCDurable";
 
 interface IMessage {
   data: string;
@@ -96,7 +96,7 @@ describe("RabbitMq Test", () => {
       });
   });
 
-  it("Consumer should recieve message from Producer", () => {
+  it("Consumer should recieve message from Producer", (done) => {
     const spy = sinon.spy()
     const factory = new RabbitMqConnectionFactory(logger, config);
     const consumer = new RabbitMqConsumer(logger, factory)
@@ -116,6 +116,7 @@ describe("RabbitMq Test", () => {
           expect(consumedMsg.value).toBeTruthy;
           expect(consumedMsg.value).toEqual(msg.value);
           disposer();
+          done();
         });
     })
   });
