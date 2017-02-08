@@ -41,6 +41,7 @@
     "@types/when": "^2.4.28",
     "awesome-typescript-loader": "^3.0.0-beta.19",
     "bluebird": "^3.3.5",
+    "bunyan": "^1.8.5",
     "cdm-logger": "^0.3.2",
     "jest": "^18.1.0",
     "jest-cli": "^18.1.0",

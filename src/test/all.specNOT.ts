@@ -1,7 +1,10 @@
 import * as sinon from "sinon";
-import { RabbitMqConnectionFactory, RabbitMqConsumer, RabbitMqProducer, IRabbitMqConnectionConfig, RabbitMqSingletonConnectionFactory } from "../main";
+import { RabbitMqConnectionFactory, RabbitMqConsumer, RabbitMqProducer, 
+  IRabbitMqConnectionConfig, RabbitMqSingletonConnectionFactory } from "../main";
 import { ConsoleLogger } from "cdm-logger";
 import * as Promise from "bluebird";
+import 'jest';
+
 import { DefaultQueueNameConfig } from "../common";
 
 const logger = ConsoleLogger.create("test", { level: "trace" });
