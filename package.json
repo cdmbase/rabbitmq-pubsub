@@ -1,6 +1,6 @@
 {
   "name": "rabbitmq-pub-sub",
-  "version": "0.2.3",
+  "version": "0.2.4",
   "description": "RabbitMq Producer and Consumer",
   "main": "./dist/main.js",
   "scripts": {
