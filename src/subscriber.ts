@@ -11,8 +11,6 @@ export interface IRabbitMqSubscriberDisposer {
 
 export class RabbitMqSubscriber {
 
-    private dynamicQueueName;
-
     constructor(private logger: Logger, private connectionFactory: IRabbitMqConnectionFactory) {
         this.logger = createChildLogger(logger, "RabbitMqConsumer");
     }
@@ -24,7 +22,10 @@ export class RabbitMqSubscriber {
             .then(channel => {
                 this.logger.trace("got channel for queue '%s'", queueConfig.name);
                 return this.setupChannel<T>(channel, queueConfig)
-                    .then(() => this.subscribeToChannel<T>(channel, queueConfig, action))
+                .then((queueName) => {
+                    this.logger.debug("queue name generated for subscription queue '(%s)' is '(%s)'", queueConfig.name, queueName);
+                   var queConfig = { ...queueConfig, dlq: queueName}
+                    return this.subscribeToChannel<T>(channel, queueConfig, action)})
             });
     }
 
@@ -35,7 +36,7 @@ export class RabbitMqSubscriber {
 
     private subscribeToChannel<T>(channel: amqp.Channel, queueConfig: IQueueNameConfig, action: (message: T) => Promisefy<any> | void) {
         this.logger.trace("subscribing to queue '%s'", queueConfig.name);
-        return channel.consume(this.dynamicQueueName, (message) => {
+        return channel.consume(queueConfig.dlq, (message) => {
             let msg: T;
             Promisefy.try(() => {
                 msg = this.getMessageObject<T>(message);
@@ -64,14 +65,13 @@ export class RabbitMqSubscriber {
      protected async getChannelSetup(channel: amqp.Channel, queueConfig: IQueueNameConfig) {
            await channel.assertExchange(queueConfig.dlx, 'fanout', this.getDLSettings());
            let result =  await channel.assertQueue(queueConfig.dlq, this.getQueueSettings(queueConfig.dlx));
-           this.logger.debug("queue genereted for subscription is '(%j)') ", result);
-           this.dynamicQueueName = result.queue;
-           await channel.bindQueue(this.dynamicQueueName, queueConfig.dlx, '');
+           await channel.bindQueue(result.queue, queueConfig.dlx, '');
+           return result.queue;
     }
 
     protected getQueueSettings(deadletterExchangeName: string): amqp.Options.AssertQueue {
         return {
-            exclusive: false
+            exclusive: true
         }
     }
 
