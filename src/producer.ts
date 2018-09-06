@@ -34,7 +34,7 @@ export class RabbitMqProducer {
   protected getQueueSettings(deadletterExchangeName: string): amqp.Options.AssertQueue {
     return {
       durable: true,
-      autoDelete: false,
+      autoDelete: true,
       arguments: {
         'x-dead-letter-exchange': deadletterExchangeName
       }

@@ -78,7 +78,7 @@ export class RabbitMqConsumer {
   protected getDLSettings(): amqp.Options.AssertQueue {
     return {
       durable: true,
-      autoDelete: false
+      autoDelete: true
     }
   }
 }
